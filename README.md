@@ -2,6 +2,10 @@
 
 An Input field that validates the driver license based on the Json file
 
+## Json Refered 
+
+https://github.com/adambullmer/USDLRegex/blob/master/regex.json
+
 ## Install the Polymer-CLI
 
 First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your application locally.
