@@ -24,7 +24,7 @@ An Input field that validates the driver license based on the Json file
             }
         </style>
 
-        <paper-dropdown-menu id="state" label="State" autocomplete required auto-validate="[[_autoValidate]]" title="State abbreviation"
+        <paper-dropdown-menu id="state" label="State" autocomplete required auto-validate title="State abbreviation"
             error-message="State is required">
             <paper-listbox class="dropdown-content" selected="{{state}}" attr-for-selected="name">
                 <template is="dom-repeat" items="[[_states]]">
@@ -32,7 +32,7 @@ An Input field that validates the driver license based on the Json file
                 </template>
             </paper-listbox>
         </paper-dropdown-menu>
-        <paper-input id="driversLicenseNumber" label="[[label]]" value="{{driversLicenseNumber}}" pattern="{{_pattern}}" autocomplete
+        <paper-input id="driversLicenseNumber" label="[[label]]" disabled value="{{driversLicenseNumber}}" pattern="{{_pattern}}" autocomplete
             required auto-validate title="State issued driver’s license number" error-message="[[errorMessage]]"></paper-input>
     </template>
 
@@ -595,6 +595,7 @@ An Input field that validates the driver license based on the Json file
             _stateChanged: function(state) {
                 console.log(state);
                 console.log(this._rules[state]);
+                this.$.driversLicenseNumber.disabled = false;
                 this._pattern = this._rules[state].rule;
                 this.errorMessage = "Drivers License should have at least " + this._rules[state].description.join(' ');
             },
