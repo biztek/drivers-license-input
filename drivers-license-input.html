@@ -103,12 +103,11 @@ An Input field that validates the driver license based on the Json file
                 this._states = Object.keys(rules);
             },
             attached: function() {
-                let that = this;
-                fetch('../regex.json').then(function(response) {
+                fetch('../regex.json').then((response) =>{
                 var contentType = response.headers.get("content-type");
                 if(contentType && contentType.indexOf("application/json") !== -1) {
-                return response.json().then(function(json) {
-                that._rules = json;
+                return response.json().then((json) =>{
+                this._rules = json;
                  });
                 } else {
                  console.log("Oops, we haven't got JSON!");
