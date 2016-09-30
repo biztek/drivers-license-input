@@ -12,6 +12,7 @@ addons:
     - google-chrome-stable
 before_script:
 - npm install -g bower polylint web-component-tester
+- bower install iron-icon#v1.0.9
 - bower install
 - polylint
 script:
