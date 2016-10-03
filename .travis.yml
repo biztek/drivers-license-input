@@ -4,7 +4,10 @@ dist: trusty
 sudo: required
 addons:
   firefox: latest
-  sauce_connect: true
+  sauce_connect: 
+  username: "Your Sauce Labs username"
+  jwt:
+    secure: "ab68497e-defb-4097-a3a2-66bfd0f616a4"
   apt:
     sources:
     - google-chrome
