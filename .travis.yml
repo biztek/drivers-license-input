@@ -5,7 +5,7 @@ sudo: required
 addons:
   firefox: latest
   sauce_connect: 
-  username: "Your Sauce Labs username"
+  username: "rajdarshan"
   jwt:
     secure: "ab68497e-defb-4097-a3a2-66bfd0f616a4"
   apt:
