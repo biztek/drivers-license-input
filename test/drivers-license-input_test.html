@@ -34,6 +34,7 @@
         test('setting valid value for driver licence and checking the value sets properly', function() {
           stateselect = Polymer.dom(element.root).querySelector('#stateselected');
           driveinput = Polymer.dom(element.root).querySelector('#driversLicenseNumber');
+          driveinput.disabled = false;
           stateselect.value = 'AL';
           assert.equal(stateselect.value, 'AL');
           driveinput.value = '1234567';
