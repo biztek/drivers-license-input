@@ -5,9 +5,8 @@ sudo: required
 addons:
   firefox: latest
   sauce_connect: 
-  username: "rajdarshan"
-  jwt:
-    secure: "ab68497e-defb-4097-a3a2-66bfd0f616a4"
+    username: "rajdarshan"
+    access_key: "ab68497e-defb-4097-a3a2-66bfd0f616a4"
   apt:
     sources:
     - google-chrome
