@@ -32,9 +32,9 @@
         });
 
         test('setting valid value for driver licence and checking the value sets properly', function() {
-          stateselect = Polymer.dom(element.root).querySelector('#stateselected');
-          driveinput.disabled = false;
-          driveinput = Polymer.dom(element.root).querySelector('#driversLicenseNumber');          
+          stateselect = Polymer.dom(element.root).querySelector('paper-listbox');          
+          driveinput = Polymer.dom(element.root).querySelector('paper-input'); 
+          driveinput.disabled = false;         
           stateselect.value = 'AL';
           assert.equal(stateselect.value, 'AL');
           driveinput.value = '1234567';
@@ -42,9 +42,9 @@
         });
 
         test('setting invalid value for driver licence and checking the value sets properly', function() {
-          stateselect = Polymer.dom(element.root).querySelector('#stateselected');
+          stateselect = Polymer.dom(element.root).querySelector('paper-listbox');
+          driveinput = Polymer.dom(element.root).querySelector('paper-input');
           driveinput.disabled = false;
-          driveinput = Polymer.dom(element.root).querySelector('#driversLicenseNumber');
           stateselect.value = 'AL';
           assert.equal(stateselect.value, 'AL');
           driveinput.value = '123456788';
