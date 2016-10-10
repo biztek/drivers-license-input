@@ -6,7 +6,16 @@ _[Demo and API Docs](https://biztek.github.io/drivers-license-input/components/d
 
 # \<drivers-license-input\>
 
-An Input field that validates the driver license based on the Json file
+`<drivers-license-input>` is a Input field that validates the driver license based on the Json file.
+
+```html
+<drivers-license-input></drivers-license-input>
+```
+It may include an optional label, which by default is "Drivers License Number".
+
+```html
+<drivers-license-input label="Drivers License"></drivers-license-input>
+```
 
 ## Json Refered 
 
