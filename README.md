@@ -17,41 +17,20 @@ It may include an optional label, which by default is "Drivers License Number".
 <drivers-license-input label="Drivers License"></drivers-license-input>
 ```
 
-## Json Refered 
+## Json File Referred 
 
 https://github.com/adambullmer/USDLRegex/blob/master/regex.json
 
-## Install the Polymer-CLI
+## Validation
 
-First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your application locally.
+By default, the drivers license number is considered to be a US drivers license number, and will be validated according to the state that is selected. If you want to customize the input for a different country, change the json file with the desired country.
 
-## Viewing Your Application
-
-```
-$ polymer serve
+```html
+<drivers-license-input></drivers-license-input>
 ```
 
-## Building Your Application
+The input is automatically validated as the user is typing by using the auto-validate and required attributes. For manual validation, the element also has a validate() method, which returns the validity of the input as well sets any appropriate error messages and styles. auto-validate and required attributes can be changed as shown below.
 
+```html
+<drivers-license-input required="false" auto-validate="false"></drivers-license-input>
 ```
-$ polymer build
-```
-
-This will create a `build/` folder with `bundled/` and `unbundled/` sub-folders
-containing a bundled (Vulcanized) and unbundled builds, both run through HTML,
-CSS, and JS optimizers.
-
-You can serve the built versions by giving `polymer serve` a folder to serve
-from:
-
-```
-$ polymer serve build/bundled
-```
-
-## Running Tests
-
-```
-$ polymer test
-```
-
-Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.
