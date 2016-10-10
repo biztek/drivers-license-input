@@ -11,13 +11,16 @@ addons:
     packages:
     - google-chrome-stable
 before_script:
-- npm install -g bower polylint web-component-tester
+- npm install web-component-tester
+- npm install bower
+- export PATH=$PWD/node_modules/.bin:$PATH
 - bower install iron-icon#v1.0.9
 - bower install
-- polylint
+- export DISPLAY=:99.0
 script:
 - xvfb-run wct --skip-plugin sauce
-- if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then wct -s 'default'; fi
+- if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then wct --plugin sauce --skip-plugin
+  local; fi
 env:
   global:
   - secure: kbJfoW5S0QpxsOYJxPbvYMNk0QLf63jDD7LSS0tfgrfWke9fgQ/egHSwd/LkOZwiZnIotBJhAmwC/khVBNTzwR1hh3pHZP/ZHnNR9tl8VglMvUfa0SjuV+04nD78+aGWV/Nbf1VCV+duW6Ur0c6h8SHMXaikfxLdKZM9WSHopVNkK0A9bLJAa2bD7LxC5f964XDQIgE+npELc7FuAHumX3hsgWxso528a3ZdNf9xsRbm70yac/GDkGKZPwy76vH/jMPp/3ITxYHHmzeRiELtVOtbmyD00MbL4+aDUe7E6NzJmzDr7ZuhlIWyAGp7lFiMsIlC2Dx2eNx852jqPfb3Vg41sQK0Vth6BhAoTi/vKmj14QM4WO8si2MncuLGT/lhjyQlaA7QbfG+38ykhnwb0/gYo9xIfA25RAIdcVnS1fZmYJREobfvtLNhCwJlo1LHDaa09Vxj6UY16cJWvHtlT3/C6HTCbf+qiAPvIdBaTdYGIMjce9GQnYqHmmpIUNqFh+8+I9v+wJroQVCVmFelxA2Ac1gF9Pd6Q0DVn5QtFg5NS3SIwhN//fWDh4N9+fofbZsizKQbLTSH3hyOX7Vvk4HsL1ZX7ZYrWyawGGUND5o30GEUaOnB/9qdum7I3YBxiiZWJ/GwQ5bv0NphrxiHnNVbD4EIgjJYlTV5ZXPXw88=
