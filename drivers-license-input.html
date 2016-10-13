@@ -98,8 +98,6 @@ An Input field that validates the driver license based on the Json file
             },
             _stateChanged: function(state) {
    
-                console.log(state);
-                console.log(this._rules[state]);
                 this.$.driversLicenseNumber.disabled = false;
                 this._pattern = this._rules[state].rule;
                 this.errorMessage = "Drivers License should have at least " + this._rules[state].description.join(' ');
