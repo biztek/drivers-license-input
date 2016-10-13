@@ -71,7 +71,8 @@ An Input field that validates the driver license based on the Json file
                     observer: '_stateChanged'
                 },
                 _pattern: {
-                    type: String
+                    type: String,
+                    value: '^[0-9]{1,7}$'
                 },                
                 _rules: {
                   type: Object,
