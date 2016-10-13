@@ -36,9 +36,16 @@ An Input field that validates the driver license based on the Json file
                     </template>
                 </paper-listbox>
             </paper-dropdown-menu>
-            <paper-input id="driversLicenseNumber" label="[[label]]" disabled$="[[disabled]]" value="{{driversLicenseNumber}}" pattern="{{_pattern}}"
-                autocomplete required="[[required]]" auto-validate="[[autoValidate]]" title="State issued driver’s license number"
-                error-message="[[errorMessage]]"></paper-input>
+            <paper-input 
+            id="driversLicenseNumber" 
+            label="[[label]]" 
+            disabled$="[[disabled]]" 
+            value="{{driversLicenseNumber}}" 
+            pattern="[[_pattern]]"
+            autocomplete required="[[required]]" 
+            auto-validate="[[autoValidate]]" 
+            title="State issued driver’s license number"
+            error-message="[[errorMessage]]"></paper-input>
         </div>
     </template>
 
@@ -64,8 +71,7 @@ An Input field that validates the driver license based on the Json file
                     observer: '_stateChanged'
                 },
                 _pattern: {
-                    type: String,
-                    value: "^[0-9]{1,7}$"
+                    type: String
                 },                
                 _rules: {
                   type: Object,
