@@ -29,7 +29,7 @@ An Input field that validates the driver license based on the Json file
             }
         </style>
         <div class="container">
-            <paper-dropdown-menu id="state" label="State" title="State abbreviation">
+            <paper-dropdown-menu id="state" label="[[statelabel]]" title="[[statetitle]]">
                 <paper-listbox class="dropdown-content" selected="{{state}}" attr-for-selected="name" id="stateselected">
                     <template is="dom-repeat" items="[[_states]]">
                         <paper-item name="[[item]]">[[item]]</paper-item>
@@ -38,13 +38,13 @@ An Input field that validates the driver license based on the Json file
             </paper-dropdown-menu>
             <paper-input 
             id="driversLicenseNumber" 
-            label="[[label]]" 
+            label="[[driversLicenselabel]]" 
             disabled$="[[disabled]]" 
             value="{{driversLicenseNumber}}" 
             pattern="[[_pattern]]"
             autocomplete required="[[required]]" 
             auto-validate="[[autoValidate]]" 
-            title="State issued driver’s license number"
+            title="[[driversLicensetitle]]"
             error-message="[[errorMessage]]"></paper-input>
         </div>
     </template>
@@ -55,9 +55,21 @@ An Input field that validates the driver license based on the Json file
             is: 'drivers-license-input',
 
             properties: {
-                label: {
+                driversLicenselabel: {
                     type: String,
                     value: 'Drivers License Number'
+                },
+                 statelabel: {
+                    type: String,
+                    value: 'State'
+                },
+                  driversLicensetitle: {
+                    type: String,
+                    value: 'State issued driver’s license number'
+                },
+                  statetitle: {
+                    type: String,
+                    value: 'State abbreviation'
                 },
                 driversLicenseNumber: {
                     type: String,
