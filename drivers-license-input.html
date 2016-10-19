@@ -29,7 +29,7 @@ An Input field that validates the driver license based on the Json file
             }
         </style>
         <div class="container">
-            <paper-dropdown-menu id="state" label="[[statelabel]]" title="[[statetitle]]">
+            <paper-dropdown-menu id="state" label="[[statelabel]]" title$="[[statetitle]]">
                 <paper-listbox class="dropdown-content" selected="{{state}}" attr-for-selected="name" id="stateselected">
                     <template is="dom-repeat" items="[[_states]]">
                         <paper-item name="[[item]]">[[item]]</paper-item>
@@ -44,7 +44,7 @@ An Input field that validates the driver license based on the Json file
             pattern="[[_pattern]]"
             autocomplete required="[[required]]" 
             auto-validate="[[autoValidate]]" 
-            title="[[driversLicensetitle]]"
+            title$="[[driversLicensetitle]]"
             error-message="[[errorMessage]]"></paper-input>
         </div>
     </template>
