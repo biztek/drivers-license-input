@@ -12,8 +12,9 @@ addons:
     - google-chrome-stable
 before_script:
 - npm install -g bower polylint web-component-tester eslint eslint-plugin-html
+- bower install iron-icon#v1.0.9
 - bower install
-- polylint --no-follow-dependencies
+- polylint
 - eslint *.html test/*.html
 script:
 - xvfb-run wct --skip-plugin sauce
