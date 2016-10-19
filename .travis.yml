@@ -11,12 +11,10 @@ addons:
     packages:
     - google-chrome-stable
 before_script:
-- npm install web-component-tester
-- npm install bower
-- export PATH=$PWD/node_modules/.bin:$PATH
-- bower install iron-icon#v1.0.9
+- npm install -g bower polylint web-component-tester eslint eslint-plugin-html
 - bower install
-- export DISPLAY=:99.0
+- polylint --no-follow-dependencies
+- eslint *.html test/*.html
 script:
 - xvfb-run wct --skip-plugin sauce
 - if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then wct --plugin sauce --skip-plugin
