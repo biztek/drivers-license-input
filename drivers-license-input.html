@@ -12,62 +12,55 @@ An Input field that validates the driver license based on the Json file
 -->
 
 <dom-module id="drivers-license-input">
-    <template>
-        <style>
-            :host {
-                display: block;
-            }
-            
-            .container {
-                @apply(--layout-flex);
-                @apply(--layout-vertical);
-            }
-            
-            paper-item {
-                padding-left: 32px;
-                padding-right: 32px;
-            }
-        </style>
-        <div class="container">
-            <paper-dropdown-menu id="state" label="[[statelabel]]" title$="[[statetitle]]">
-                <paper-listbox class="dropdown-content" selected="{{state}}" attr-for-selected="name" id="stateselected">
-                    <template is="dom-repeat" items="[[_states]]">
-                        <paper-item name="[[item]]">[[item]]</paper-item>
-                    </template>
-                </paper-listbox>
-            </paper-dropdown-menu>
-            <paper-input 
-            id="driversLicenseNumber" 
-            label="[[driversLicenselabel]]" 
-            disabled$="[[disabled]]" 
-            value="{{driversLicenseNumber}}" 
-            pattern="[[_pattern]]"
-            autocomplete required="[[required]]" 
-            auto-validate="[[autoValidate]]" 
-            title$="[[driversLicensetitle]]"
-            error-message="[[errorMessage]]"></paper-input>
-        </div>
-    </template>
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+			
+			.container {
+				@apply(--layout-flex);
+				@apply(--layout-vertical);
+			}
+			
+			paper-item {
+				padding-left: 32px;
+				padding-right: 32px;
+			}
+		</style>
+		<div class="container">
+			<paper-dropdown-menu id="state" label="[[stateLabel]]" title$="[[stateTitle]]">
+				<paper-listbox class="dropdown-content" selected="{{state}}" attr-for-selected="name" id="stateselected">
+					<template is="dom-repeat" items="[[_states]]">
+						<paper-item name="[[item]]">[[item]]</paper-item>
+					</template>
+				</paper-listbox>
+			</paper-dropdown-menu>
+			<paper-input id="driversLicenseNumber" label="[[driversLicenseLabel]]" disabled$="[[disabled]]" value="{{driversLicenseNumber}}"
+				pattern="[[_pattern]]" autocomplete required="[[required]]" auto-validate="[[autoValidate]]" title$="[[driversLicensetitle]]"
+				error-message="[[errorMessage]]"></paper-input>
+		</div>
+	</template>
 
-    <script>
+	<script>
         Polymer({
 
             is: 'drivers-license-input',
 
             properties: {
-                driversLicenselabel: {
+                driversLicenseLabel: {
                     type: String,
                     value: 'Drivers License Number'
                 },
-                 statelabel: {
+                 stateLabel: {
                     type: String,
                     value: 'State'
                 },
-                  driversLicensetitle: {
+                  driversLicenseTitle: {
                     type: String,
                     value: 'State issued driver’s license number'
                 },
-                  statetitle: {
+                  stateTitle: {
                     type: String,
                     value: 'State abbreviation'
                 },
@@ -102,17 +95,17 @@ An Input field that validates the driver license based on the Json file
 
                 required: {
                     type: Boolean,
-                    value: true
+                    value: false
                 },
 
                 autoValidate: {
                     type: Boolean,
-                    value: true
+                    value: false
                 },
 
                 disabled: {
                     type: Boolean,
-                    value: true
+                    value: false
                 }
             },
             _stateChanged: function(state) {
@@ -132,7 +125,7 @@ An Input field that validates the driver license based on the Json file
                 this._rules = json;
                  });
                 } else {
-                 console.log("Oops, we haven't got JSON!");
+                 console.error("Missing Json File!");
                 }
                 });
             },
