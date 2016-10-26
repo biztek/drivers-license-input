@@ -1,0 +1,60 @@
+<!doctype html>
+
+<html>
+
+<head>
+  <title>drivers-license-input test</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+
+  <link rel="import" href="../drivers-license-input.html">
+</head>
+
+<body>
+
+  <test-fixture id="basic">
+    <template>
+      <drivers-license-input></drivers-license-input>
+    </template>
+  </test-fixture>
+
+  <script>
+      suite('drivers-license-input', function() {
+        let element, driveinput, stateselect;
+            setup(function() {
+                element = fixture('basic');
+            });
+
+        test('instantiating the element works', function() {
+          assert.equal(element.is, 'drivers-license-input');
+        });
+
+        test('setting valid value for driver licence and checking the value sets properly', function() {
+          stateselect = Polymer.dom(element.root).querySelector('paper-listbox');          
+          driveinput = Polymer.dom(element.root).querySelector('paper-input'); 
+          driveinput.disabled = false;         
+          stateselect.value = 'AL';
+          assert.equal(stateselect.value, 'AL');
+          driveinput.value = '1234567';
+          assert.equal(driveinput.value, '1234567');
+        });
+
+        test('setting invalid value for driver licence and checking the value sets properly', function() {
+          stateselect = Polymer.dom(element.root).querySelector('paper-listbox');
+          driveinput = Polymer.dom(element.root).querySelector('paper-input');
+          driveinput.disabled = false;
+          stateselect.value = 'AL';
+          assert.equal(stateselect.value, 'AL');
+          driveinput.value = '123456788';
+          driveinput.validate();
+          assert.isTrue(driveinput.invalid, 'driver licence Number is invalid');
+        });
+
+
+      });
+    </script>
+</body>
+
+</html>

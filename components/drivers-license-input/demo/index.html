@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>drivers-license-input demo</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+	<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+	<link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+	<link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+
+	<link rel="import" href="../drivers-license-input.html">
+
+	<style is="custom-style" include="demo-pages-shared-styles">
+		#inputForValidation {
+			display: inline-block;
+			width: calc(100% - 75px);
+		}
+		
+		.validatelayout {
+			@apply(--layout-horizontal);
+			@apply(--layout-end);
+		}
+		
+		button {
+			margin: 6px;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="vertical-section-container centered">
+		<h3>Basic drivers-license-input Demo</h3>
+		<demo-snippet>
+			<template>
+				<drivers-license-input auto-Validate disabled></drivers-license-input>
+			</template>
+		</demo-snippet>
+	</div>
+
+	<div class="vertical-section-container centered">
+		<h3>drivers-license-input Demo with auto-Validate set</h3>
+		<demo-snippet>
+			<template>
+				<drivers-license-input auto-Validate></drivers-license-input>
+			</template>
+		</demo-snippet>
+	</div>
+
+	<div class="vertical-section-container centered">
+		<h3>drivers-license-input Demo which validates on demand</h3>
+		<demo-snippet>
+			<template>
+				<div class="validatelayout">
+					<drivers-license-input id="inputForValidation" required></drivers-license-input>
+					<button onclick="validate()">Validate!</button>
+				</div>
+			</template>
+		</demo-snippet>
+	</div>
+	<script>
+    function validate() {
+      document.getElementById('inputForValidation').validate();
+    }
+  </script>
+
+</body>
+
+</html>
