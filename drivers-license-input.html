@@ -39,7 +39,7 @@ An Input field that validates the driver license based on the Json file
 			</paper-dropdown-menu>
 			<paper-input id="driversLicenseNumber" label="[[driversLicenseLabel]]" disabled$="[[disabled]]" value="{{driversLicenseNumber}}"
 				pattern="[[_pattern]]" autocomplete required="[[required]]" auto-validate="[[autoValidate]]" title$="[[driversLicensetitle]]"
-				error-message="[[errorMessage]]"></paper-input>
+				error-message="[[errorMessage]]" invalid="{{invalid}}"></paper-input>
 		</div>
 	</template>
 
@@ -105,6 +105,11 @@ An Input field that validates the driver license based on the Json file
                 },
 
                 disabled: {
+                    type: Boolean,
+                    value: false
+                },
+
+                 invalid: {
                     type: Boolean,
                     value: false
                 }
