@@ -30,16 +30,17 @@ An Input field that validates the driver license based on the Json file
 			}
 		</style>
 		<div class="container">
-			<paper-dropdown-menu id="state" label="[[stateLabel]]" title$="[[stateTitle]]">
+			<paper-dropdown-menu id="state" label="[[stateLabel]]" title$="[[stateTitle]]" required="[[required]]" auto-validate="[[autoValidate]]"
+				error-message="[[stateErrorMessage]]" invalid="{{invalid}}">
 				<paper-listbox class="dropdown-content" selected="{{state}}" attr-for-selected="name" id="stateselected">
 					<template is="dom-repeat" items="[[_states]]">
 						<paper-item name="[[item]]">[[item]]</paper-item>
 					</template>
 				</paper-listbox>
 			</paper-dropdown-menu>
-			<paper-input id="driversLicenseNumber" label="[[driversLicenseLabel]]" disabled$="[[disabled]]" value="{{driversLicenseNumber}}"
-				pattern="[[_pattern]]" autocomplete required="[[required]]" auto-validate="[[autoValidate]]" title$="[[driversLicensetitle]]"
-				error-message="[[errorMessage]]" invalid="{{invalid}}"></paper-input>
+			<paper-input id="driversLicenseNumber" label="[[driversLicenseLabel]]" disabled$="[[disabled]]" value="{{value}}" pattern="[[_pattern]]"
+				autocomplete required="[[required]]" auto-validate="[[autoValidate]]" title$="[[driversLicensetitle]]" error-message="[[errorMessage]]"
+				invalid="{{invalid}}"></paper-input>
 		</div>
 	</template>
 
@@ -65,12 +66,17 @@ An Input field that validates the driver license based on the Json file
                     type: String,
                     value: 'State abbreviation'
                 },
-                driversLicenseNumber: {
+                value: {
                     type: String,
+                    notify:true
                 },
                 errorMessage: {
                     type: String,
                     value: 'Drivers License Number is invalid'
+                },
+                stateErrorMessage: {
+                    type: String,
+                    value: 'Please Select a Sate.'
                 },
                 state: {
                     type: String,
@@ -112,7 +118,7 @@ An Input field that validates the driver license based on the Json file
                  invalid: {
                     type: Boolean,
                     value: false
-                }
+                },
 
             },
             validate: function() {
