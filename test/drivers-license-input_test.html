@@ -78,7 +78,7 @@
             setup(function() {
                 element = fixture('validDriversLicenseNumber');
             });
-            test('valid deanumber is set invalid false', function() {
+            test('valid driverslicensenumber is set invalid false', function() {
                 stateselect = Polymer.dom(element.root).querySelector('paper-listbox');
                 stateselect.value = 'AL';
                 assert.isFalse(element.invalid, 'Drivers License Number is valid');
@@ -91,12 +91,12 @@
                 element = fixture('validator');
             });
 
-            test('deanumber value is not set invalid to true', function() {               
+            test('driverslicensenumber value is not set invalid to true', function() {               
                 stateselect = Polymer.dom(element.root).querySelector('paper-listbox');
                 stateselect.value = 'AL';
                 assert.isFalse(element.invalid, 'Driver Licence Number is invalid');
             });
-            test('deanumber value is not set throw errorMessage', function() {
+            test('driverslicensenumber value is not set throw errorMessage', function() {
                 assert.equal(element.errorMessage, 'Drivers License Number is invalid');
             });
       });
