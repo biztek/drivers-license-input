@@ -19,6 +19,8 @@ It may include an optional label, which by default is "Drivers License Number".
 
 ## Json File Referred 
 
+Below is the Json file that is used in the element.
+
 https://github.com/adambullmer/USDLRegex/blob/master/regex.json
 
 ## Validation
@@ -26,11 +28,18 @@ https://github.com/adambullmer/USDLRegex/blob/master/regex.json
 By default, the drivers license number is considered to be a US drivers license number, and will be validated according to the state that is selected. If you want to customize the input for a different country, change the json file with the desired country.
 
 ```html
-<drivers-license-input></drivers-license-input>
+<drivers-license-input auto-Validate></drivers-license-input>
 ```
 
-The input is automatically validated as the user is typing by using the auto-validate and required attributes. For manual validation, the element also has a validate() method, which returns the validity of the input as well sets any appropriate error messages and styles. auto-validate and required attributes can be changed as shown below.
+The input is by using the auto-validate and required attributes. For manual validation, the element also has a validate() method, which returns the validity of the input as well sets any appropriate error messages and styles. auto-validate and required attributes can be changed as shown below.
 
 ```html
-<drivers-license-input required="false" auto-validate="false"></drivers-license-input>
+<drivers-license-input required auto-validate></drivers-license-input>
+```
+
+## Enable Drivers License only if a state is selected
+
+To allow Drivers License to be entered only if a state is selected by setting the 'disabled' property as shown below
+```html
+<drivers-license-input auto-Validate disabled></drivers-license-input>
 ```
