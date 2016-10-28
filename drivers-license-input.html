@@ -31,13 +31,13 @@ An Input field that validates the driver license based on the Json file
 		</style>
 		<div class="container">
 			<paper-dropdown-menu id="state" label="[[stateLabel]]" title$="[[stateTitle]]" required="[[required]]" auto-validate="[[autoValidate]]" error-message="[[stateErrorMessage]]" invalid="{{invalid}}">
-				<paper-listbox class="dropdown-content" selected="{{state}}" attr-for-selected="name" id="stateselected">
+				<paper-listbox class="dropdown-content" selected="{{state}}" attr-for-selected="name">
 					<template is="dom-repeat" items="[[_states]]">
 						<paper-item name="[[item]]">[[item]]</paper-item>
 					</template>
 				</paper-listbox>
 			</paper-dropdown-menu>
-			<paper-input id="driversLicenseNumber" label="[[driversLicenseLabel]]" disabled$="[[disabled]]" value="{{value}}" pattern="[[_pattern]]" autocomplete required="[[required]]" auto-validate="[[autoValidate]]" title$="[[driversLicensetitle]]" error-message="[[errorMessage]]"
+			<paper-input id="driversLicenseNumber" label="[[driversLicenseLabel]]" disabled$="[[disabled]]" value="{{value}}" pattern="[[_pattern]]" autocomplete required="[[required]]" auto-validate="[[autoValidate]]" title$="[[driversLicenseTitle]]" error-message="[[errorMessage]]"
 							invalid="{{invalid}}"></paper-input>
 		</div>
 	</template>
