@@ -2,10 +2,7 @@
 
 _[Demo and API Docs](https://biztek.github.io/drivers-license-input/components/drivers-license-input/)_
 
-# \
-
-<drivers-license-input\>
-</drivers-license-input\>
+# \<drivers-license-input\>
 
 `<drivers-license-input>` is a Input field that validates the driver license based on the Json file.
 
