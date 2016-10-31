@@ -7,169 +7,177 @@
 
 <!--
 `drivers-license-input`
-An Input field that validates the driver license based on the Json file
+An Input field that validates the driver license based on the rules in the /rules.json file
 
 @demo demo/index.html
 -->
 
 <dom-module id="drivers-license-input">
-	<template>
-		<style>
-			:host {
-				display: block;
-			}
-			
-			.container {
-				@apply(--layout-flex);
-				@apply(--layout-vertical);
-			}
-			
-			paper-item {
-				padding-left: 32px;
-				padding-right: 32px;
-			}
-		</style>
-		<div class="container">
-			<paper-dropdown-menu id="state" label="[[stateLabel]]" title$="[[stateTitle]]" required="[[stateRequired]]" auto-validate="[[stateAutoValidate]]"
-				error-message="[[stateErrorMessage]]" invalid="{{stateInvalid}}">
-				<paper-listbox class="dropdown-content" selected="{{state}}" attr-for-selected="name">
-					<template is="dom-repeat" items="[[_states]]">
-						<paper-item name="[[item]]">[[item]]</paper-item>
-					</template>
-				</paper-listbox>
-			</paper-dropdown-menu>
-			<paper-input id="driversLicenseNumber" label="[[driversLicenseLabel]]" disabled$="[[disabled]]" value="{{value}}" pattern="[[_pattern]]"
-				autocomplete$="[[autocomplete]]" required="[[required]]" auto-validate="[[autoValidate]]" title$="[[driversLicenseTitle]]"
-				error-message="[[errorMessage]]" invalid="{{invalid}}"></paper-input>
-		</div>
-	</template>
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
 
-	<script>
-		Polymer({
+      .container {
+        @apply(--layout-flex);
+        @apply(--layout-vertical);
+      }
 
-			is: 'drivers-license-input',
+      paper-item {
+        padding-left: 32px;
+        padding-right: 32px;
+      }
 
-			properties: {
-				driversLicenseLabel: {
-					type: String,
-					value: 'Drivers License Number'
-				},
-				stateLabel: {
-					type: String,
-					value: 'State'
-				},
-				driversLicenseTitle: {
-					type: String,
-					value: 'State issued driver’s license number'
-				},
-				stateTitle: {
-					type: String,
-					value: 'State abbreviation'
-				},
-				value: {
-					type: String,
-					notify: true
-				},
-				errorMessage: {
-					type: String,
-					value: 'Drivers License Number is invalid'
-				},
-				stateErrorMessage: {
-					type: String,
-					value: 'Please Select a Sate.'
-				},
-				state: {
-					type: String,
-					observer: '_stateChanged'
-				},
-				_pattern: {
-					type: String,
-					value: '^[0-9]{1,7}$'
-				},
-				_rules: {
-					type: Object,
-					observer: '_rulesChanged'
-				},
+    </style>
+    <div class="container">
+      <paper-dropdown-menu id="state" label="[[stateLabel]]" title$="[[stateTitle]]" required="[[stateRequired]]" auto-validate="[[stateAutoValidate]]" error-message="[[stateErrorMessage]]" invalid="{{stateInvalid}}">
+        <paper-listbox class="dropdown-content" selected="{{state}}" attr-for-selected="name">
+          <template is="dom-repeat" items="[[_states]]">
+            <paper-item name="[[item]]">[[item]]</paper-item>
+          </template>
+        </paper-listbox>
+      </paper-dropdown-menu>
 
-				_states: {
-					type: Array
-				},
+      <paper-input
+        id="driversLicenseNumber"
+        label="[[driversLicenseLabel]]"
+        disabled$="[[disabled]]"
+        value="{{value}}"
+        pattern="[[_pattern]]"
+        autocomplete$="[[autocomplete]]"
+        required="[[required]]"
+        auto-validate="[[autoValidate]]"
+        title$="[[driversLicenseTitle]]"
+        error-message="[[errorMessage]]"
+        invalid="{{invalid}}"></paper-input>
+    </div>
+  </template>
 
-				required: {
-					type: Boolean,
-					value: false
-				},
+  <script>
+    Polymer({
 
-				autoValidate: {
-					type: Boolean,
-					value: false
-				},
+      is: 'drivers-license-input',
 
-				disabled: {
-					type: Boolean,
-					value: false
-				},
+      properties: {
+        driversLicenseLabel: {
+          type: String,
+          value: 'Drivers License Number'
+        },
+        stateLabel: {
+          type: String,
+          value: 'State'
+        },
+        driversLicenseTitle: {
+          type: String,
+          value: 'State issued driver’s license number'
+        },
+        stateTitle: {
+          type: String,
+          value: 'State abbreviation'
+        },
+        value: {
+          type: String,
+          notify: true
+        },
+        errorMessage: {
+          type: String,
+          value: 'Drivers License Number is invalid'
+        },
+        stateErrorMessage: {
+          type: String,
+          value: 'Please Select a Sate.'
+        },
+        state: {
+          type: String,
+          observer: '_stateChanged'
+        },
+        _pattern: {
+          type: String,
+          value: '^[0-9]{1,7}$'
+        },
+        _rules: {
+          type: Object,
+          observer: '_rulesChanged'
+        },
 
-				invalid: {
-					type: Boolean,
-					value: false,
-					notify: true
-				},
+        _states: {
+          type: Array
+        },
 
-				autocomplete: {
-					type: Boolean,
-					value: false
-				},
+        required: {
+          type: Boolean,
+          value: false
+        },
 
-				stateInvalid: {
-					type: Boolean,
-					value: false,
-					notify: true
-				},		
+        autoValidate: {
+          type: Boolean,
+          value: false
+        },
 
-				stateRequired: {
-					type: Boolean,
-					value: false
-				},		
+        disabled: {
+          type: Boolean,
+          value: false
+        },
 
-				stateAutoValidate: {
-					type: Boolean,
-					value: false
-				},		
+        invalid: {
+          type: Boolean,
+          value: false,
+          notify: true
+        },
 
-			},
+        autocomplete: {
+          type: Boolean,
+          value: false
+        },
 
-			validate: function() {				
-				this.$.driversLicenseNumber.validate();
-				this.$.state.validate();
-				return;				
-			},
+        stateInvalid: {
+          type: Boolean,
+          value: false,
+          notify: true
+        },
 
-			_stateChanged: function(state) {
-				this.$.driversLicenseNumber.disabled = false;
-				this._pattern = this._rules[state].rule;
-				this.errorMessage = "Drivers License should have at least " + this._rules[state].description.join(' ');
-			},
+        stateRequired: {
+          type: Boolean,
+          value: false
+        },
 
-			_rulesChanged: function(rules) {
-				this._states = Object.keys(rules);
-			},
-			
-			attached: function() {
-				this.async(function() {
-				fetch(this.resolveUrl('rules.json')).then((response) => {
-					var contentType = response.headers.get("content-type");
-					if (contentType && contentType.indexOf("application/json") !== -1) {
-						return response.json().then((json) => {
-							this._rules = json;
-						});
-					} else {
-						console.error("Missing Json File!");
-					}
-				});
-				}, 10);
-			},
+        stateAutoValidate: {
+          type: Boolean,
+          value: false
+        }
+      },
 
-		});
-	</script>
+      validate: function() {
+        this.$.driversLicenseNumber.validate();
+        this.$.state.validate();
+        return;
+      },
+
+      _stateChanged: function(state) {
+        this.$.driversLicenseNumber.disabled = false;
+        this._pattern = this._rules[state].rule;
+        this.errorMessage = "Drivers License should have at least " + this._rules[state].description.join(' ');
+      },
+
+      _rulesChanged: function(rules) {
+        this._states = Object.keys(rules);
+      },
+
+      attached: function() {
+        this.async(function() {
+          fetch(this.resolveUrl('rules.json')).then((response) => {
+            var contentType = response.headers.get("content-type");
+            if (contentType && contentType.indexOf("application/json") !== -1) {
+              return response.json().then((json) => {
+                this._rules = json;
+              });
+            } else {
+              console.error("Missing Json File!");
+            }
+          });
+        }, 10);
+      }
+    });
+  </script>
 </dom-module>
