@@ -18,27 +18,29 @@ An Input field that validates the driver license based on the Json file
 			:host {
 				display: block;
 			}
-
+			
 			.container {
 				@apply(--layout-flex);
 				@apply(--layout-vertical);
 			}
-
+			
 			paper-item {
 				padding-left: 32px;
 				padding-right: 32px;
 			}
 		</style>
 		<div class="container">
-			<paper-dropdown-menu id="state" label="[[stateLabel]]" title$="[[stateTitle]]" required="[[required]]" auto-validate="[[autoValidate]]" error-message="[[stateErrorMessage]]" invalid="{{invalid}}">
+			<paper-dropdown-menu id="state" label="[[stateLabel]]" title$="[[stateTitle]]" required="[[stateRequired]]" auto-validate="[[stateAutoValidate]]"
+				error-message="[[stateErrorMessage]]" invalid="{{stateInvalid}}">
 				<paper-listbox class="dropdown-content" selected="{{state}}" attr-for-selected="name">
 					<template is="dom-repeat" items="[[_states]]">
 						<paper-item name="[[item]]">[[item]]</paper-item>
 					</template>
 				</paper-listbox>
 			</paper-dropdown-menu>
-			<paper-input id="driversLicenseNumber" label="[[driversLicenseLabel]]" disabled$="[[disabled]]" value="{{value}}" pattern="[[_pattern]]" autocomplete$="[[autocomplete]]" required="[[required]]" auto-validate="[[autoValidate]]" title$="[[driversLicenseTitle]]" error-message="[[errorMessage]]"
-							invalid="{{invalid}}"></paper-input>
+			<paper-input id="driversLicenseNumber" label="[[driversLicenseLabel]]" disabled$="[[disabled]]" value="{{value}}" pattern="[[_pattern]]"
+				autocomplete$="[[autocomplete]]" required="[[required]]" auto-validate="[[autoValidate]]" title$="[[driversLicenseTitle]]"
+				error-message="[[errorMessage]]" invalid="{{invalid}}"></paper-input>
 		</div>
 	</template>
 
@@ -117,24 +119,45 @@ An Input field that validates the driver license based on the Json file
 				autocomplete: {
 					type: Boolean,
 					value: false
-				},				
+				},
+
+				stateInvalid: {
+					type: Boolean,
+					value: false,
+					notify: true
+				},		
+
+				stateRequired: {
+					type: Boolean,
+					value: false
+				},		
+
+				stateAutoValidate: {
+					type: Boolean,
+					value: false
+				},		
 
 			},
-			validate: function() {
 
-				return this.$.driversLicenseNumber.validate();
+			validate: function() {				
+				this.$.driversLicenseNumber.validate();
+				this.$.state.validate();
+				return;				
 			},
+
 			_stateChanged: function(state) {
-
 				this.$.driversLicenseNumber.disabled = false;
 				this._pattern = this._rules[state].rule;
 				this.errorMessage = "Drivers License should have at least " + this._rules[state].description.join(' ');
 			},
+
 			_rulesChanged: function(rules) {
 				this._states = Object.keys(rules);
 			},
+			
 			attached: function() {
-				fetch('../regex.json').then((response) => {
+				this.async(function() {
+				fetch(this.resolveUrl('rules.json')).then((response) => {
 					var contentType = response.headers.get("content-type");
 					if (contentType && contentType.indexOf("application/json") !== -1) {
 						return response.json().then((json) => {
@@ -144,6 +167,7 @@ An Input field that validates the driver license based on the Json file
 						console.error("Missing Json File!");
 					}
 				});
+				}, 10);
 			},
 
 		});
