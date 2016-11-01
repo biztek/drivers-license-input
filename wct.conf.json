@@ -4,12 +4,22 @@
       "browsers": [{
           "browserName": "microsoftedge",
           "platform": "Windows 10",
-          "version": ""
+          "version": "latest"
+        },
+        {
+            "browserName": "microsoftedge",
+            "platform": "Windows 10",
+            "version": "latest-1"
         },
         {
           "browserName": "safari",
           "platform": "OS X 10.11",
-          "version": "9"
+          "version": "latest"
+        },
+        {
+          "browserName": "safari",
+          "platform": "OS X 10.11",
+          "version": "latest-1"
         }
       ]
     }
