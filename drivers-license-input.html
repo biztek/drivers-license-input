@@ -1,9 +1,12 @@
 <link rel="import" href="../polymer/polymer.html">
+
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
 <link rel="import" href="../paper-item/paper-item.html">
-<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 
 <!--
 `drivers-license-input`
@@ -52,6 +55,11 @@ An Input field that validates the driver license based on the rules in the /rule
         error-message="[[errorMessage]]"
         invalid="{{invalid}}"></paper-input>
     </div>
+
+    <iron-ajax id="ajax"
+    url="[[_url]]"
+    handle-as="json"
+    last-response="{{_rules}}"></iron-ajax>
   </template>
 
   <script>
@@ -60,6 +68,15 @@ An Input field that validates the driver license based on the rules in the /rule
       is: 'drivers-license-input',
 
       properties: {
+        _rulesFile: {
+          type: String,
+          value: 'rules.json',
+        },
+        _url: {
+          type: Boolean,
+          computed: '_computeUrl(_rulesFile)',
+        },
+
         driversLicenseLabel: {
           type: String,
           value: 'Drivers License Number'
@@ -82,11 +99,11 @@ An Input field that validates the driver license based on the rules in the /rule
         },
         errorMessage: {
           type: String,
-          value: 'Drivers License Number is invalid'
+          value: 'Driver’s License Number is invalid'
         },
         stateErrorMessage: {
           type: String,
-          value: 'Please Select a Sate.'
+          value: 'Please Select a State.'
         },
         state: {
           type: String,
@@ -157,7 +174,7 @@ An Input field that validates the driver license based on the rules in the /rule
       _stateChanged: function(state) {
         this.$.driversLicenseNumber.disabled = false;
         this._pattern = this._rules[state].rule;
-        this.errorMessage = "Drivers License should have at least " + this._rules[state].description.join(' ');
+        this.errorMessage = `Drivers License should have at least ${this._rules[state].description.join(' ')}`;
       },
 
       _rulesChanged: function(rules) {
@@ -166,18 +183,13 @@ An Input field that validates the driver license based on the rules in the /rule
 
       attached: function() {
         this.async(function() {
-          fetch(this.resolveUrl('rules.json')).then((response) => {
-            var contentType = response.headers.get("content-type");
-            if (contentType && contentType.indexOf("application/json") !== -1) {
-              return response.json().then((json) => {
-                this._rules = json;
-              });
-            } else {
-              console.error("Missing Json File!");
-            }
-          });
-        }, 10);
-      }
+          this.$.ajax.generateRequest();
+        }, 1);
+      },
+
+      _computeUrl: function(rulesFile) {
+        return this.resolveUrl(rulesFile);
+      },
     });
   </script>
 </dom-module>

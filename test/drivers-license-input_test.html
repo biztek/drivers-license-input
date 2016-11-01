@@ -3,104 +3,104 @@
 <html>
 
 <head>
-	<title>drivers-license-input test</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
-	<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-	<script src="../../web-component-tester/browser.js"></script>
+  <title>drivers-license-input test</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
 
-	<link rel="import" href="../drivers-license-input.html">
+  <link rel="import" href="../drivers-license-input.html">
 </head>
 
 <body>
 
-	<test-fixture id="basic">
-		<template>
-			<drivers-license-input></drivers-license-input>
-		</template>
-	</test-fixture>
+  <test-fixture id="basic">
+    <template>
+      <drivers-license-input></drivers-license-input>
+    </template>
+  </test-fixture>
 
-	<test-fixture id="validator">
-		<template>
-			<drivers-license-input disabled value="" auto-validate></drivers-license-input>
-		</template>
-	</test-fixture>
-	<test-fixture id="validDriversLicenseNumber">
-		<template>
-			<drivers-license-input disabled value="123" auto-validate></drivers-license-input>
-		</template>
-	</test-fixture>
-	<script>
-		suite('drivers-license-input', function() {
-			let element, driveinput, stateselect;
-			setup(function() {
-				element = fixture('basic');
-			});
+  <test-fixture id="validator">
+    <template>
+      <drivers-license-input disabled value="" auto-validate></drivers-license-input>
+    </template>
+  </test-fixture>
+  <test-fixture id="validDriversLicenseNumber">
+    <template>
+      <drivers-license-input disabled value="123" auto-validate></drivers-license-input>
+    </template>
+  </test-fixture>
+  <script>
+    suite('drivers-license-input', function() {
+      let element, driveinput, stateselect;
+      setup(function() {
+        element = fixture('basic');
+      });
 
-			test('instantiating the element works', function() {
-				assert.equal(element.is, 'drivers-license-input');
-			});
+      test('instantiating the element works', function() {
+        assert.equal(element.is, 'drivers-license-input');
+      });
 
-			test('setting valid value for driver licence and checking the value sets properly', function() {
-				stateselect = Polymer.dom(element.root).querySelector('paper-listbox');
-				driveinput = Polymer.dom(element.root).querySelector('paper-input');
-				stateselect.value = 'AL';
-				assert.equal(stateselect.value, 'AL');
-				driveinput.value = '1234567';
-				assert.equal(driveinput.value, '1234567');
-			});
+      test('setting valid value for driver licence and checking the value sets properly', function() {
+        stateselect = Polymer.dom(element.root).querySelector('paper-listbox');
+        driveinput = Polymer.dom(element.root).querySelector('paper-input');
+        stateselect.value = 'AL';
+        assert.equal(stateselect.value, 'AL');
+        driveinput.value = '1234567';
+        assert.equal(driveinput.value, '1234567');
+      });
 
-			test('setting invalid value for driver licence and checking the value sets properly', function() {
-				stateselect = Polymer.dom(element.root).querySelector('paper-listbox');
-				driveinput = Polymer.dom(element.root).querySelector('paper-input');
-				stateselect.value = 'AL';
-				assert.equal(stateselect.value, 'AL');
-				driveinput.value = '123456788';
-				driveinput.validate();
-				assert.isTrue(driveinput.invalid, 'driver licence Number is invalid');
-			});
+      test('setting invalid value for driver licence and checking the value sets properly', function() {
+        stateselect = Polymer.dom(element.root).querySelector('paper-listbox');
+        driveinput = Polymer.dom(element.root).querySelector('paper-input');
+        stateselect.value = 'AL';
+        assert.equal(stateselect.value, 'AL');
+        driveinput.value = '123456788';
+        driveinput.validate();
+        assert.isTrue(driveinput.invalid, 'driver license Number is invalid');
+      });
 
-			test('changing driverlicencenumber value and checking if the validation works', function() {
-				stateselect = Polymer.dom(element.root).querySelector('paper-listbox');
-				driveinput = Polymer.dom(element.root).querySelector('paper-input');
-				stateselect.value = 'AL';
-				driveinput.value = '789';
-				assert.isFalse(driveinput.invalid, 'Driver Licence Number is valid');
-				driveinput.autoValidate = true;
-				driveinput.value = 'ADBC';
-				assert.isTrue(driveinput.invalid, 'Driver Licence Number is invalid');
-			});
+      test('changing driverlicencenumber value and checking if the validation works', function() {
+        stateselect = Polymer.dom(element.root).querySelector('paper-listbox');
+        driveinput = Polymer.dom(element.root).querySelector('paper-input');
+        stateselect.value = 'AL';
+        driveinput.value = '789';
+        assert.isFalse(driveinput.invalid, 'Driver License Number is valid');
+        driveinput.autoValidate = true;
+        driveinput.value = 'ADBC';
+        assert.isTrue(driveinput.invalid, 'Driver License Number is invalid');
+      });
 
-		});
+    });
 
-		suite('validating drivers-license-input with value', function() {
-			let element, stateselect;
-			setup(function() {
-				element = fixture('validDriversLicenseNumber');
-			});
-			test('valid driverslicensenumber is set invalid false', function() {
-				stateselect = Polymer.dom(element.root).querySelector('paper-listbox');
-				stateselect.value = 'AL';
-				assert.isFalse(element.invalid, 'Drivers License Number is valid');
-			});
-		});
+    suite('validating drivers-license-input with value', function() {
+      let element, stateselect;
+      setup(function() {
+        element = fixture('validDriversLicenseNumber');
+      });
+      test('valid driverslicensenumber is set invalid false', function() {
+        stateselect = Polymer.dom(element.root).querySelector('paper-listbox');
+        stateselect.value = 'AL';
+        assert.isFalse(element.invalid, 'Drivers License Number is valid');
+      });
+    });
 
-		suite('validating drivers-license-input without value', function() {
-			let element, stateselect;
-			setup(function() {
-				element = fixture('validator');
-			});
+    suite('validating drivers-license-input without value', function() {
+      let element, stateselect;
+      setup(function() {
+        element = fixture('validator');
+      });
 
-			test('driverslicensenumber value is not set invalid to true', function() {
-				stateselect = Polymer.dom(element.root).querySelector('paper-listbox');
-				stateselect.value = 'AL';
-				assert.isFalse(element.invalid, 'Driver Licence Number is invalid');
-			});
-			test('driverslicensenumber value is not set throw errorMessage', function() {
-				assert.equal(element.errorMessage, 'Drivers License Number is invalid');
-			});
-		});
-	</script>
+      test('driverslicensenumber value is not set invalid to true', function() {
+        stateselect = Polymer.dom(element.root).querySelector('paper-listbox');
+        stateselect.value = 'AL';
+        assert.isFalse(element.invalid, 'Driver License Number is invalid');
+      });
+      test('driverslicensenumber value is not set throw errorMessage', function() {
+        assert.equal(element.errorMessage, 'Driver’s License Number is invalid');
+      });
+    });
+  </script>
 </body>
 
 </html>
