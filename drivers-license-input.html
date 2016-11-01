@@ -174,7 +174,7 @@ An Input field that validates the driver license based on the rules in the /rule
       _stateChanged: function(state) {
         this.$.driversLicenseNumber.disabled = false;
         this._pattern = this._rules[state].rule;
-        this.errorMessage = `Drivers License should have at least ${this._rules[state].description.join(' ')}`;
+        this.errorMessage = `Drivers License should have at least ${this._rules[state].description.join(' or ')}`;
       },
 
       _rulesChanged: function(rules) {
