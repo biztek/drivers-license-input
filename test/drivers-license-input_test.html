@@ -30,6 +30,12 @@
       <drivers-license-input disabled value="123" auto-validate></drivers-license-input>
     </template>
   </test-fixture>
+    <test-fixture id="PreselectedStateDropdownMenu">
+    <template>
+      <drivers-license-input></drivers-license-input>
+    </template>
+  </test-fixture>
+  
   <script>
     suite('drivers-license-input', function() {
       let element, driveinput, stateselect;
@@ -100,6 +106,21 @@
         assert.equal(element.errorMessage, 'Driver’s License Number is invalid');
       });
     });
+
+    suite('when state value is set', function() {
+      let dropdownElement, stateselect, statevalue;
+        setup(function() {
+          dropdownElement = fixture('PreselectedStateDropdownMenu');
+        });
+        test('the input area shows the correct selection', function() {
+        statevalue = Polymer.dom(dropdownElement.root).querySelector('paper-dropdown-menu');
+        stateselect = Polymer.dom(dropdownElement.root).querySelector('paper-listbox');
+        stateselect.value = 'AL';
+        statevalue.selected = 'AL';        
+        assert.equal(stateselect.value, 'AL')
+        });
+    });
+
   </script>
 </body>
 
