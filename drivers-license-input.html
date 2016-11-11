@@ -35,7 +35,7 @@ An Input field that validates the driver license based on the rules in the /rule
     </style>
     <div class="container">
       <paper-dropdown-menu id="state" label="[[stateLabel]]" title$="[[stateTitle]]" required="[[stateRequired]]" auto-validate="[[stateAutoValidate]]" error-message="[[stateErrorMessage]]" invalid="{{stateInvalid}}">
-        <paper-listbox class="dropdown-content" selected="[[state]]" attr-for-selected="name">
+        <paper-listbox class="dropdown-content" selected="{{state}}" attr-for-selected="name">
           <template is="dom-repeat" items="[[_states]]">
             <paper-item name="[[item]]">[[item]]</paper-item>
           </template>
