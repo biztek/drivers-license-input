@@ -13,7 +13,7 @@
 	<link rel="import" href="../drivers-license-input.html">
 
 	<style is="custom-style" include="demo-pages-shared-styles">
-		#inputForValidation {
+		#inputForValidation, #inputForAutoValidation {
 			display: inline-block;
 			width: calc(100% - 75px);
 		}
@@ -60,9 +60,25 @@
 			</template>
 		</demo-snippet>
 	</div>
+
+    <div class="vertical-section-container centered">
+		<h3>drivers-license-input Demo which validates on demand with auto-Validate set to true</h3>
+		<demo-snippet>
+			<template>
+				<div class="validatelayout">
+					<drivers-license-input id="inputForAutoValidation" required state-required auto-Validate state-auto-validate></drivers-license-input>
+					<button onclick="autovalidate()">Validate!</button>
+				</div>
+			</template>
+		</demo-snippet>
+	</div>
+
 	<script>
 		function validate() {
 			document.getElementById('inputForValidation').validate();
+		}
+		function autovalidate() {
+			document.getElementById('inputForAutoValidation').validate();
 		}
 	</script>
 

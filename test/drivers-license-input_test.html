@@ -30,6 +30,11 @@
       <drivers-license-input disabled value="123" auto-validate></drivers-license-input>
     </template>
   </test-fixture>
+  <test-fixture id="validState">
+    <template>
+      <drivers-license-input state-auto-validate></drivers-license-input>
+    </template>
+  </test-fixture>
   <script>
     suite('drivers-license-input', function() {
       let element, driveinput, stateselect;
@@ -99,6 +104,24 @@
       test('driverslicensenumber value is not set throw errorMessage', function() {
         assert.equal(element.errorMessage, 'Driver’s License Number is invalid');
       });
+    });
+
+    suite('validating state on selection changed', function() {
+      let element, statevalue;
+      setup(function() {
+        element = fixture('validState');
+      });
+      test('validate state when not selected', function() {
+        statevalue = Polymer.dom(element.root).querySelector('paper-dropdown-menu');    
+        statevalue.validate();    
+        assert.equal(element.stateErrorMessage, 'Please Select a State.');
+      });
+      test('validate state when selected', function() {
+        statevalue = Polymer.dom(element.root).querySelector('paper-dropdown-menu');
+        statevalue.selected = 'AL';    
+        statevalue.validate();     
+        assert.isFalse(element.stateInvalid, 'Please Select a State.');
+      });      
     });
   </script>
 </body>

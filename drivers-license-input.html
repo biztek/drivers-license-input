@@ -34,7 +34,7 @@ An Input field that validates the driver license based on the rules in the /rule
 
     </style>
     <div class="container">
-      <paper-dropdown-menu id="state" label="[[stateLabel]]" title$="[[stateTitle]]" required="[[stateRequired]]" auto-validate="[[stateAutoValidate]]" error-message="[[stateErrorMessage]]" invalid="{{stateInvalid}}">
+      <paper-dropdown-menu id="state" label="[[stateLabel]]" title$="[[stateTitle]]" required="[[stateRequired]]" auto-validate="[[stateAutoValidate]]" error-message="[[stateErrorMessage]]" invalid="{{stateInvalid}}" on-iron-select="_dropdownValueChanged">
         <paper-listbox class="dropdown-content" selected="{{state}}" attr-for-selected="name">
           <template is="dom-repeat" items="[[_states]]">
             <paper-item name="[[item]]">[[item]]</paper-item>
@@ -107,6 +107,7 @@ An Input field that validates the driver license based on the rules in the /rule
         },
         state: {
           type: String,
+          notify: true,
           observer: '_stateChanged'
         },
         _pattern: {
@@ -175,6 +176,15 @@ An Input field that validates the driver license based on the rules in the /rule
         this.$.driversLicenseNumber.disabled = false;
         this._pattern = this._rules[state].rule;
         this.errorMessage = `Driver\'s License should have at least ${this._rules[state].description.join(' or ')}`;
+        this.$.state.validate();
+      },
+
+      // TODO: this a workaround for a bug in dropdown that doesn't validate properly. Need a better way of handling this
+      _dropdownValueChanged: function(e) {
+        let target = e.currentTarget;
+        this.async(function() {
+          target.validate();
+        }, 10);
       },
 
       _rulesChanged: function(rules) {
