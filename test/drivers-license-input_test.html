@@ -123,6 +123,21 @@
         assert.isFalse(element.stateInvalid, 'Please Select a State.');
       });      
     });
+
+    suite('when state value is set', function() {
+      let dropdownElement, stateselect, statevalue;
+        setup(function() {
+          dropdownElement = fixture('basic');
+        });
+        test('the input area shows the correct selection', function() {
+          statevalue = Polymer.dom(dropdownElement.root).querySelector('paper-dropdown-menu');
+          stateselect = Polymer.dom(dropdownElement.root).querySelector('paper-listbox');
+          stateselect.value = 'AL';
+          statevalue.selected = 'AL';        
+          assert.equal(stateselect.value, 'AL')
+        });
+    });
+
   </script>
 </body>
 
