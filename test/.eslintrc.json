@@ -2,6 +2,18 @@
   "env": {
     "mocha": true
   },
+  "rules": {
+    "no-console": 0,
+    "no-extra-parens": 2,
+    "eqeqeq": 2,
+    "no-global-assign": 2,
+    "no-loop-func": 2,
+    "wrap-iife": 2,
+    "no-undef-init": 2,
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "space-before-blocks": 2,
+    "keyword-spacing": ["error", { "before": true }]
+  },
   "globals": {
     "assert": true,
     "sinon": true,
@@ -9,6 +21,8 @@
     "fixture": true,
     "Polymer": true,
     "MockInteractions": true,
+    "expect": true,
+    "forceXIfStamp": true,
     "a11ySuite": true
   }
 }
