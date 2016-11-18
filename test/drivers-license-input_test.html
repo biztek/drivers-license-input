@@ -20,124 +20,165 @@
     </template>
   </test-fixture>
 
-  <test-fixture id="validator">
+  <test-fixture id="valid-drivers-license-number-and-state">
     <template>
-      <drivers-license-input disabled value="" auto-validate></drivers-license-input>
+      <drivers-license-input value="C12345678901" state="IL" auto-validate></drivers-license-input>
     </template>
   </test-fixture>
-  <test-fixture id="validDriversLicenseNumber">
+
+  <test-fixture id="invalid-drivers-license-number-valid-state">
     <template>
-      <drivers-license-input disabled value="123" auto-validate></drivers-license-input>
+      <drivers-license-input value="C1234567890" state="IL" auto-validate></drivers-license-input>
     </template>
   </test-fixture>
-  <test-fixture id="validState">
+
+  <test-fixture id="valid-drivers-license-number-invalid-state">
     <template>
-      <drivers-license-input state-auto-validate></drivers-license-input>
+      <drivers-license-input value="C12345678901" state="CA" auto-validate></drivers-license-input>
     </template>
   </test-fixture>
+
+  <test-fixture id="empty-drivers-license-number-and-state">
+    <template>
+      <drivers-license-input value="C12345678901" state="CA" auto-validate></drivers-license-input>
+    </template>
+  </test-fixture>
+
   <script>
-    suite('drivers-license-input', function() {
-      let element, driveinput, stateselect;
+    suite('Validate', function() {
+      let element, dlNumber, state;
       setup(function() {
         element = fixture('basic');
+        state = Polymer.dom(element.root).querySelector('#state');
+        dlNumber = Polymer.dom(element.root).querySelector('#driversLicenseNumber');
       });
 
       test('instantiating the element works', function() {
         assert.equal(element.is, 'drivers-license-input');
       });
 
-      test('setting valid value for driver licence and checking the value sets properly', function() {
-        stateselect = Polymer.dom(element.root).querySelector('paper-listbox');
-        driveinput = Polymer.dom(element.root).querySelector('paper-input');
-        stateselect.value = 'AL';
-        assert.equal(stateselect.value, 'AL');
-        driveinput.value = '1234567';
-        assert.equal(driveinput.value, '1234567');
-      });
-
-      test('setting invalid value for driver licence and checking the value sets properly', function() {
-        stateselect = Polymer.dom(element.root).querySelector('paper-listbox');
-        driveinput = Polymer.dom(element.root).querySelector('paper-input');
-        stateselect.value = 'AL';
-        assert.equal(stateselect.value, 'AL');
-        driveinput.value = '123456788';
-        driveinput.validate();
-        assert.isTrue(driveinput.invalid, 'driver license Number is invalid');
-      });
-
-      test('changing driverlicencenumber value and checking if the validation works', function() {
-        stateselect = Polymer.dom(element.root).querySelector('paper-listbox');
-        driveinput = Polymer.dom(element.root).querySelector('paper-input');
-        stateselect.value = 'AL';
-        driveinput.value = '789';
-        assert.isFalse(driveinput.invalid, 'Driver License Number is valid');
-        driveinput.autoValidate = true;
-        driveinput.value = 'ADBC';
-        assert.isTrue(driveinput.invalid, 'Driver License Number is invalid');
-      });
-
-    });
-
-    suite('validating drivers-license-input with value', function() {
-      let element, stateselect;
-      setup(function() {
-        element = fixture('validDriversLicenseNumber');
-      });
-      test('valid driverslicensenumber is set invalid false', function() {
-        stateselect = Polymer.dom(element.root).querySelector('paper-listbox');
-        stateselect.value = 'AL';
-        assert.isFalse(element.invalid, 'Drivers License Number is valid');
-      });
-    });
-
-    suite('validating drivers-license-input without value', function() {
-      let element, stateselect;
-      setup(function() {
-        element = fixture('validator');
-      });
-
-      test('driverslicensenumber value is not set invalid to true', function() {
-        stateselect = Polymer.dom(element.root).querySelector('paper-listbox');
-        stateselect.value = 'AL';
-        assert.isFalse(element.invalid, 'Driver License Number is invalid');
-      });
-      test('driverslicensenumber value is not set throw errorMessage', function() {
-        assert.equal(element.errorMessage, 'Driver’s License Number is invalid');
-      });
-    });
-
-    suite('validating state on selection changed', function() {
-      let element, statevalue;
-      setup(function() {
-        element = fixture('validState');
-      });
-      test('validate state when not selected', function() {
-        statevalue = Polymer.dom(element.root).querySelector('paper-dropdown-menu');    
-        statevalue.validate();    
-        assert.equal(element.stateErrorMessage, 'Please Select a State.');
-      });
-      test('validate state when selected', function() {
-        statevalue = Polymer.dom(element.root).querySelector('paper-dropdown-menu');
-        statevalue.selected = 'AL';    
-        statevalue.validate();     
-        assert.isFalse(element.stateInvalid, 'Please Select a State.');
-      });      
-    });
-
-    suite('when state value is set', function() {
-      let dropdownElement, stateselect, statevalue;
-        setup(function() {
-          dropdownElement = fixture('basic');
+      test('should be valid if none of the properties are set', function(done) {
+        // wait for rules to load and then check if invalid
+        element.addEventListener('dl-rules-loaded', function() {
+          expect(element.invalid).to.equal(false);
+          expect(state.errorMessage).to.equal('Please select a State');
+          expect(dlNumber.errorMessage).to.equal('Driver\'s License Number is invalid');
+          done();
         });
-        test('the input area shows the correct selection', function() {
-          statevalue = Polymer.dom(dropdownElement.root).querySelector('paper-dropdown-menu');
-          stateselect = Polymer.dom(dropdownElement.root).querySelector('paper-listbox');
-          stateselect.value = 'AL';
-          statevalue.selected = 'AL';        
-          assert.equal(stateselect.value, 'AL')
+      });
+
+      test('should be valid if autoValidate is true but required, dl# and state are not set', function(done) {
+        element.autoValidate = true;
+        // wait for rules to load and then check if invalid
+        element.addEventListener('dl-rules-loaded', function() {
+          expect(element.invalid).to.equal(false);
+          done();
         });
+      });
+
+      test('should be invalid if autoValidate and required are true but dl# and state are not set', function(done) {
+        element.autoValidate = true;
+        element.required = true;
+        // wait for rules to load and then check if invalid
+        element.addEventListener('dl-rules-loaded', function() {
+          expect(element.invalid).to.be.true;
+          expect(state.invalid).to.be.true;
+          expect(dlNumber.invalid).to.be.true;
+          done();
+        });
+      });
+
+      test('should change from invalid to valid after changing state and DL# to valid values from nothing', function(done) {
+        element.autoValidate = true;
+        element.required = true;
+        // wait for rules to load and then check if invalid
+        element.addEventListener('dl-rules-loaded', function() {
+          expect(element.invalid).to.be.true;
+          element.value = 'C12345678901';
+          element.state = 'IL';
+
+          window.setTimeout(function() {
+            expect(element.invalid).to.be.false;
+            expect(dlNumber.invalid).to.be.false;
+            expect(state.invalid).to.be.false;
+            done();
+          }, 300);
+        });
+      });
+
+      test('should become valid after changing state to a valid state', function(done) {
+        element.autoValidate = true;
+        element.required = true;
+        element.value = 'C12345678901';
+        element.state = 'CA';
+
+        // wait for rules to load and then check if invalid
+        element.addEventListener('dl-rules-loaded', function() {
+          window.setTimeout(function() {
+            expect(element.invalid).to.be.true;
+            expect(state.invalid).to.be.false;
+            expect(dlNumber.invalid).to.be.true;
+            element.state = 'IL';
+
+            window.setTimeout(function() {
+              expect(element.invalid).to.be.false;
+              expect(dlNumber.invalid).to.be.false;
+              expect(state.invalid).to.be.false;
+              done();
+            }, 300);
+          }, 300);
+        });
+      });
+
     });
 
+    suite('Valid Drivers License and state', function() {
+      let element;
+      setup(function() {
+        element = fixture('valid-drivers-license-number-and-state');
+      });
+
+      test('should set invalid to false', function(done) {
+        // wait for rules to load and then check if invalid
+        element.addEventListener('dl-rules-loaded', function() {
+          expect(element.invalid).to.equal(false);
+          done();
+        });
+      });
+    });
+
+    suite('Invalid Drivers License and valid state', function() {
+      let element;
+      setup(function() {
+        element = fixture('invalid-drivers-license-number-valid-state');
+      });
+
+      test('should be invalid if drivers license number is invalid but state is valid', function(done) {
+        // wait for rules to load and then check if invalid
+        element.addEventListener('dl-rules-loaded', function() {
+          expect(element.invalid).to.equal(true);
+          let validErrorMessage = element._errorMessage.startsWith('Driver\'s License should have at least');
+          expect(validErrorMessage).to.be.true;
+          done();
+        });
+      });
+    });
+
+    suite('Valid Drivers License and invalid state', function() {
+      let element;
+      setup(function() {
+        element = fixture('valid-drivers-license-number-invalid-state');
+      });
+
+      test('should be invalid if drivers license number is valid but state is invalid', function(done) {
+        // wait for rules to load and then check if invalid
+        element.addEventListener('dl-rules-loaded', function() {
+          expect(element.invalid).to.equal(true);
+          expect(element._stateErrorMessage).to.equal('Please select a State');
+          done();
+        });
+      });
+    });
   </script>
 </body>
 

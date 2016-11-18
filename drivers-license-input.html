@@ -34,8 +34,17 @@ An Input field that validates the driver license based on the rules in the /rule
 
     </style>
     <div class="container">
-      <paper-dropdown-menu id="state" label="[[stateLabel]]" title$="[[stateTitle]]" required="[[stateRequired]]" auto-validate="[[stateAutoValidate]]" error-message="[[stateErrorMessage]]" invalid="{{stateInvalid}}" on-iron-select="_dropdownValueChanged">
-        <paper-listbox class="dropdown-content" selected="{{state}}" attr-for-selected="name">
+      <paper-dropdown-menu
+        id="state"
+        label="[[stateLabel]]"
+        title$="[[stateTitle]]"
+        required="[[required]]"
+        auto-validate="[[autoValidate]]"
+        error-message="[[_stateErrorMessage]]"
+        invalid="{{_stateInvalid}}"
+        on-iron-select="_dropdownValueChanged">
+
+        <paper-listbox class="dropdown-content" selected="{{_selectedState}}" attr-for-selected="name">
           <template is="dom-repeat" items="[[_states]]">
             <paper-item name="[[item]]">[[item]]</paper-item>
           </template>
@@ -45,21 +54,24 @@ An Input field that validates the driver license based on the rules in the /rule
       <paper-input
         id="driversLicenseNumber"
         label="[[driversLicenseLabel]]"
-        disabled$="[[disabled]]"
         value="{{value}}"
         pattern="[[_pattern]]"
         autocomplete$="[[autocomplete]]"
         required="[[required]]"
         auto-validate="[[autoValidate]]"
         title$="[[driversLicenseTitle]]"
-        error-message="[[errorMessage]]"
-        invalid="{{invalid}}"></paper-input>
+        error-message="[[_errorMessage]]"
+        invalid="{{_dlnInvalid}}">
+      </paper-input>
     </div>
 
-    <iron-ajax id="ajax"
-    url="[[_url]]"
-    handle-as="json"
-    last-response="{{_rules}}"></iron-ajax>
+    <iron-ajax
+      auto
+      id="ajax"
+      url="[[_url]]"
+      handle-as="json"
+      last-response="{{_rules}}">
+    </iron-ajax>
   </template>
 
   <script>
@@ -72,6 +84,12 @@ An Input field that validates the driver license based on the rules in the /rule
           type: String,
           value: 'rules.json',
         },
+
+        _selectedState: {
+          type: String,
+          observer: '_selectedStateChanged',
+        },
+
         _url: {
           type: Boolean,
           computed: '_computeUrl(_rulesFile)',
@@ -79,41 +97,51 @@ An Input field that validates the driver license based on the rules in the /rule
 
         driversLicenseLabel: {
           type: String,
-          value: 'Drivers License Number'
+          value: 'Driver\'s License Number'
         },
+
         stateLabel: {
           type: String,
           value: 'Driver\'s License State'
         },
+
         driversLicenseTitle: {
           type: String,
-          value: 'State issued driver’s license number'
+          value: 'State issued driver\'s license number'
         },
+
         stateTitle: {
           type: String,
           value: 'State abbreviation'
         },
+
         value: {
           type: String,
-          notify: true
+          notify: true,
+          observer: '_valueChanged',
         },
-        errorMessage: {
+
+        _errorMessage: {
           type: String,
-          value: 'Driver’s License Number is invalid'
+          value: 'Driver\'s License Number is invalid'
         },
-        stateErrorMessage: {
+
+        _stateErrorMessage: {
           type: String,
-          value: 'Please Select a State.'
+          value: 'Please select a State'
         },
+
         state: {
           type: String,
           notify: true,
           observer: '_stateChanged'
         },
+
         _pattern: {
           type: String,
           value: '^[0-9]{1,7}$'
         },
+
         _rules: {
           type: Object,
           observer: '_rulesChanged'
@@ -133,11 +161,6 @@ An Input field that validates the driver license based on the rules in the /rule
           value: false
         },
 
-        disabled: {
-          type: Boolean,
-          value: false
-        },
-
         invalid: {
           type: Boolean,
           value: false,
@@ -149,52 +172,82 @@ An Input field that validates the driver license based on the rules in the /rule
           value: false
         },
 
-        stateInvalid: {
+        _stateInvalid: {
           type: Boolean,
           value: false,
-          notify: true
         },
 
-        stateRequired: {
+        _dlnInvalid: {
           type: Boolean,
-          value: false
-        },
-
-        stateAutoValidate: {
-          type: Boolean,
-          value: false
+          value: false,
         }
       },
 
+      observers: ['_setInvalid(_stateInvalid, _dlnInvalid)'],
+
+      _selectedStateChanged: function(selectedState) {
+        if (selectedState) {
+          if (this.state !== selectedState) this.set('state', selectedState);
+        }
+      },
+
+      _setInvalid: function(stateInvalid, dlnInvalid) {
+        this.set('invalid', stateInvalid || dlnInvalid);
+      },
+
       validate: function() {
-        this.$.driversLicenseNumber.validate();
-        this.$.state.validate();
-        return;
+        return this.$.driversLicenseNumber.validate() && this.$.state.validate();
       },
 
       _stateChanged: function(state) {
-        this.$.driversLicenseNumber.disabled = false;
-        this._pattern = this._rules[state].rule;
-        this.errorMessage = `Driver\'s License should have at least ${this._rules[state].description.join(' or ')}`;
-        this.$.state.validate();
+
+        if (state) {
+          if (this._rules) {
+            if (state !== this._selectedState) this._selectedState = state;
+
+            this._pattern = this._rules[state].rule;
+            this.fire('pattern-updated', {});
+
+            this._errorMessage = `Driver\'s License should have at least ${this._rules[state].description.join(' or ')}`;
+          }
+
+          if (this.autoValidate) {
+            this.validate();
+          }
+        }
+      },
+
+      _valueChanged: function(value) {
+        if (this.autoValidate) this.$.driversLicenseNumber.validate();
       },
 
       // TODO: this a workaround for a bug in dropdown that doesn't validate properly. Need a better way of handling this
       _dropdownValueChanged: function(e) {
         let target = e.currentTarget;
         this.async(function() {
-          target.validate();
+          if (this.autoValidate) target.validate();
         }, 10);
       },
 
       _rulesChanged: function(rules) {
-        this._states = Object.keys(rules);
-      },
+        if (rules) {
+          this._states = Object.keys(rules);
 
-      attached: function() {
-        this.async(function() {
-          this.$.ajax.generateRequest();
-        }, 1);
+          if (this.state) {
+            if (this.state !== this._selectedState) this._selectedState = this.state;
+
+            this._pattern = rules[this.state].rule;
+            this.fire('pattern-updated', {});
+
+            this._errorMessage = `Driver\'s License should have at least ${rules[this.state].description.join(' or ')}`;
+          }
+
+          if (this.autoValidate) {
+            this.validate();
+          }
+
+          this.fire('dl-rules-loaded', {});
+        }
       },
 
       _computeUrl: function(rulesFile) {
