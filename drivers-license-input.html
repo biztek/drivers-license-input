@@ -196,11 +196,12 @@ An Input field that validates the driver license based on the rules in the /rule
       },
 
       validate: function() {
-        return this.$.driversLicenseNumber.validate() && this.$.state.validate();
+        let dlValid = this.$.driversLicenseNumber.validate();
+        let stateValid = this.$.state.validate();
+        return dlValid && stateValid;
       },
 
       _stateChanged: function(state) {
-
         if (state) {
           if (this._rules) {
             if (state !== this._selectedState) this._selectedState = state;
