@@ -43,3 +43,7 @@ To allow Drivers License to be entered only if a state is selected by setting th
 ```html
 <drivers-license-input auto-Validate disabled></drivers-license-input>
 ```
+
+## License
+
+Licensed under [Apache 2.0](LICENSE).
