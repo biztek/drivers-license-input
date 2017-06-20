@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/biztek/drivers-license-input.svg?branch=master)](https://travis-ci.org/biztek/drivers-license-input)
 
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/biztek/drivers-license-input)
+
 _[Demo and API Docs](https://biztek.github.io/drivers-license-input/components/drivers-license-input/)_
 
 # \<drivers-license-input\>
