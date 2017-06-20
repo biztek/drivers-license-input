@@ -1,11 +1,10 @@
 language: node_js
-node_js: 
-  - "4"
+node_js: "6"
 dist: trusty
 sudo: required
 addons:
-  firefox: latest
   sauce_connect: true
+  firefox: latest
   apt:
     sources:
     - google-chrome
@@ -20,7 +19,3 @@ script:
 - xvfb-run wct --skip-plugin sauce
 - if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then wct --plugin sauce --skip-plugin
   local; fi
-env:
-  global:
-  - secure: S8YSqbR4EANnqqHqeh/OsbegQVpBuEvvHxJAfScJISGVeSqCBPGPnjrUJgE4HESC8YOU9te6I5MTc7xOX83v1nxTkFSXyGOdoM+X3U+/45iC8nxVlCUkZcyhRBtzOi5GfaUJJgali3vTtLYwv7wd5rFb8qM/0gWlaOzwnNwdf4aW9drOsFBmCQJKehsJ4w6s9tIx9So7X8hje7bDHQ710JmUxm9TCEO4njlF9PHhpUK1V/MvfRsZztUkYxByq6kdzQYtZLBk27YCxwV4en6hiE2ATab2Huu6/EqAcd2S3yG28ncniKmJihGbNl/8pXJ43/pj+v+i6KWjZckRQ5M15KVh/gr/a+8bOS2dtkhopxC673W/Jhr249HyfhYevLbmp0MTcunhjsl+c2JjFLOzs6dx8QmduqRkC5buyKN8u4cfALionoWCcDwXTwkN1VBHqsW7MYfQapM/bX+Vubvbf5g8xa5X0+0urbnMVx1T+RWjtZwWacesAb7DBYI/TuawvsTwpIq4VIU3AzKAAdFnzAADYXVmlMg8P/t6QVycJU4ebpY3hPV4VuFeQ/ti047JlNEMZE7/6hzhiNUy2KeHqwYaDPI9j4xSGyTchBEIn0uRTAQhP/rv4JcmOkyV+rERR9nq49CFQ15v4WUl3+O+RbwmAfA3tpxQHnpasY2hces=
-  - secure: NmeSwC5Ljz2/Jmu4drX5A0LaQkixS41jaiEOMJFdOjpfizoe0hd6wMnyG0p3Zco9QTv7V0JR3H/G/U7eOU7cjVKErXZxC2WeLnh1n6U0tVEhZAXDNX1F1cqiSCUXrRR37K6S9k8nCcCJRNqH8QODsv+hrpkpv7XQAFFMbH+aHCJWDvn3gcxYL52uU2d91TpZQj3pAtXNRsGWnR/eVTVDKEt2kd7I6bGzvIucqHQj4H4A801VcYTYT1AzXEdUjZ54/DynKu60OgbiQs+MfoRcvltIL1HBLgmdMkUecWXFIakAyJyjwU1FALumzinb5bV7n8NGrxMPQkX2e2FRdW/qMZOkkLRlmdGiUVaxTFQyNGzTIuQhK6aeFbIGbmlwQyJny0W0i51eGdFapGce923yrnlCDTs/joWRzwhFWFIlUYV0dp+2scc5NuvgfJSezti/lDCTdhwUYQVaDfplfWQyXAYa6PEafk6MrZ2QSfoCairbuM+lHxCzZexD7wLobrCB4TefmyWXgcXGVOi2ypbDPt41saiLBqQVzFInTooQX12zaa1/zQoHZfrjSygfZi9lzmXgEbfQSzTPNd9wKCA0/YvYfgF1Eqm2lfmslHUWf0Pdx+uZL945vYcPlfkry/ABLHOsKwG4Uu3w6I81u4GJ6VYlu/jKuPOWt39JCYjCLRI=
