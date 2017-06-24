@@ -1,5 +1,9 @@
 [![Build Status](https://travis-ci.org/biztek/drivers-license-input.svg?branch=master)](https://travis-ci.org/biztek/drivers-license-input)
 
+[![Sauce Test Status](https://saucelabs.com/buildstatus/biztek)](https://saucelabs.com/u/biztek)
+
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/biztek.svg)](https://saucelabs.com/u/biztek)
+
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/biztek/drivers-license-input)
 
 _[Demo and API Docs](https://biztek.github.io/drivers-license-input/components/drivers-license-input/)_
