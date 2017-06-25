@@ -157,8 +157,8 @@
         // wait for rules to load and then check if invalid
         element.addEventListener('dl-rules-loaded', function() {
           expect(element.invalid).to.equal(true);
-          let validErrorMessage = element._errorMessage.startsWith('Driver\'s License should have at least');
-          expect(validErrorMessage).to.be.true;
+          let startingIndex = element._errorMessage.indexOf('Driver\'s License should have at least');
+          expect(startingIndex).to.equal(0);
           done();
         });
       });
